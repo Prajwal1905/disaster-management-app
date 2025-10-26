@@ -1,0 +1,10 @@
+flask
+pymongo
+flask-cors
+python-dotenv
+werkzeug
+flask-socketio
+requests>=2.0.0
+twilio>=7.0.0
+
+flask-jwt-extended

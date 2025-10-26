@@ -1,0 +1,28 @@
+# === Python / Backend ===
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+instance/
+.env
+.venv/
+env/
+*.log
+
+# === Node / Frontend ===
+disaster-frontend/node_modules/
+disaster-frontend/build/
+disaster-frontend/.env.local
+disaster-frontend/.env.*.local
+
+# === System / Editor ===
+.vscode/
+.DS_Store
+Thumbs.db
+
+# === Misc ===
+*.zip
+*.tar.gz
+*.tgz
