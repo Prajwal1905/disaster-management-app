@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "leaflet/dist/leaflet.css";
+
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.input {
+  @apply w-full px-4 py-2 border rounded outline-none focus:ring-2 focus:ring-blue-300;
+}
+
+.btn {
+  @apply bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition;
+}
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+}
+
