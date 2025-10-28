@@ -3,6 +3,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { FaUsers, FaBell, FaSignOutAlt } from "react-icons/fa";
+import { API_BASE_URL } from "../config";
 
 const VolunteerFeed = () => {
   const [email, setEmail] = useState("");
@@ -27,7 +28,7 @@ const VolunteerFeed = () => {
     }
 
     try {
-      const res = await axios.post("/api/volunteer-login", {
+      const res = await axios.post(`${API_BASE_URL}/api/volunteer-login`, {
         email,
         password,
       });
@@ -53,7 +54,7 @@ const VolunteerFeed = () => {
 
   const fetchFeed = async (email) => {
     try {
-      const res = await axios.get("/api/volunteer-groups");
+      const res = await axios.get(`${API_BASE_URL}/api/volunteer-groups`);
       const allGroups = res.data;
       const myGroups = allGroups.filter((g) => g.members.includes(email));
       const invites = allGroups.filter(
@@ -69,7 +70,7 @@ const VolunteerFeed = () => {
 
   const handleJoinGroup = async (groupId) => {
     try {
-      await axios.post(`/api/volunteer-groups/${groupId}/join`, {
+      await axios.post(`${API_BASE_URL}/api/volunteer-groups/${groupId}/join`, {
         email: volunteer.email,
       });
       toast.success("Joined group!");

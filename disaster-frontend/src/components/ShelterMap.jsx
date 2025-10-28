@@ -6,6 +6,8 @@ import L from "leaflet";
 import axios from "axios";
 import toast from "react-hot-toast";
 import "leaflet/dist/leaflet.css";
+import { API_BASE_URL } from "../config";
+
 
 const userIcon = new L.Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
@@ -58,8 +60,8 @@ const ShelterMap = () => {
   const [nearest, setNearest] = useState(null);
 
   useEffect(() => {
-    axios
-      .get("/api/shelters")
+    axios.get(`${API_BASE_URL}/api/shelters`)
+
       .then((res) => setShelters(res.data))
       .catch(() => toast.error("Failed to load shelters"));
   }, []);

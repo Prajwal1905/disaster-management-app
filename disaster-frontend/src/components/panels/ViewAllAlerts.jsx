@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { API_BASE_URL } from "../../config";
+
 
 const ViewAllAlerts = () => {
   const [alerts, setAlerts] = useState([]);
@@ -13,7 +15,7 @@ const ViewAllAlerts = () => {
       if (statusFilter) params.status = statusFilter;
       if (pincode) params.pincode = pincode;
 
-      const res = await axios.get("/api/superadmin/alerts", { params });
+      const res = await axios.get(`${API_BASE_URL}/api/superadmin/alerts`, { params });
       setAlerts(res.data);
     } catch (err) {
       toast.error("Error fetching alerts");
@@ -55,7 +57,7 @@ const ViewAllAlerts = () => {
     if (!confirmed) return;
 
     try {
-      await axios.delete(`/api/superadmin/alerts/${id}`);
+      await axios.delete(`${API_BASE_URL}/api/superadmin/alerts/${id}`);
       toast.success("Alert deleted successfully");
       fetchAlerts();
     } catch (err) {
@@ -69,7 +71,7 @@ const ViewAllAlerts = () => {
     if (!confirmed) return;
 
     try {
-      await axios.patch(`/api/superadmin/alerts/${id}/resolve`);
+      await axios.patch(`${API_BASE_URL}/api/superadmin/alerts/${id}/resolve`);
       toast.success("Alert resolved successfully");
       fetchAlerts();
     } catch (err) {

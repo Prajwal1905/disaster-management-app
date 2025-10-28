@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import socket from "../socket";
 import { FaExclamationTriangle, FaMapMarkerAlt, FaUser, FaPhone, FaClock } from "react-icons/fa";
+import { API_BASE_URL } from "../config";
 
 const AlertFeed = () => {
   const [alerts, setAlerts] = useState([]);
@@ -10,7 +11,7 @@ const AlertFeed = () => {
   useEffect(() => {
     const fetchAlerts = async () => {
       try {
-        const response = await axios.get("/api/alerts/feed");
+        const response = await axios.get(`${API_BASE_URL}/api/alerts/feed`);
         setAlerts(response.data);
       } catch (error) {
         console.error("Error fetching alerts feed:", error);

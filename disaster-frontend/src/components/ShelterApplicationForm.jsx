@@ -4,6 +4,8 @@ import { toast } from "react-hot-toast";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import { API_BASE_URL } from "../config";
+
 
 const ShelterApplicationForm = () => {
   const [formData, setFormData] = useState({
@@ -63,7 +65,8 @@ const ShelterApplicationForm = () => {
     form.append("role", "shelter_application");
 
     try {
-      await axios.post("/api/shelters/shelter-application", form, {
+      await axios.post(`${API_BASE_URL}/api/shelters/shelter-application`, form, {
+
         headers: { "Content-Type": "multipart/form-data" },
       });
 

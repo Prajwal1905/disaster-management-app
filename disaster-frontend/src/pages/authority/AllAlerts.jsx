@@ -3,6 +3,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 import { ROLE_TO_TYPES, ROLE_RADIUS } from "../../utils/hazardMapping";
+import { API_BASE_URL } from "../../config";
 
 const AllAlerts = () => {
   const [alerts, setAlerts] = useState([]);
@@ -11,7 +12,6 @@ const AllAlerts = () => {
 
   useEffect(() => {
     const stored = localStorage.getItem("authorityUser");
-    
 
     if (stored) {
       const parsed = JSON.parse(stored);
@@ -21,7 +21,8 @@ const AllAlerts = () => {
       fetchAlerts(parsed);
 
       // Setup Socket.IO
-      socket.current = io("http://localhost:5000"); // adjust URL if needed
+      socket.current = io(API_BASE_URL);
+      // adjust URL if needed
       socket.current.on("connect", () => console.log("🟢 Socket connected"));
 
       socket.current.on("new_alert", (data) => {
@@ -42,14 +43,15 @@ const AllAlerts = () => {
       const radius = ROLE_RADIUS[role] || 15;
       const allowedTypes = ROLE_TO_TYPES[role] || [];
 
-      const res = await axios.get("http://localhost:5000/api/alerts/all", {
+      const res = await axios.get(`${API_BASE_URL}/api/alerts/all`, {
         params: { role, auth_id: _id },
       });
 
       const filtered = (res.data || []).filter((alert) => {
         if ((alert.status || "").toLowerCase() === "resolved") return false;
-        if (!allowedTypes.includes((alert.type || "").toLowerCase())) return false;
-        
+        if (!allowedTypes.includes((alert.type || "").toLowerCase()))
+          return false;
+
         return true;
       });
 
@@ -75,7 +77,12 @@ const AllAlerts = () => {
       allowedTypes.includes((alert.type || "").toLowerCase())
     ) {
       if (lat != null && lon != null) {
-        const distance = getDistanceFromLatLonInKm(lat, lon, alert.latitude, alert.longitude);
+        const distance = getDistanceFromLatLonInKm(
+          lat,
+          lon,
+          alert.latitude,
+          alert.longitude
+        );
         if (distance > radius) return;
       }
 

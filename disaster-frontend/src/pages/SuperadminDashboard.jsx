@@ -21,6 +21,7 @@ import ManageShelterPanel from "../components/panels/ManageShelterPanel";
 import SuperAdminMapView from "../components/panels/SuperAdminMapView";
 import RefugeeRequestsPanel from "../components/panels/RefugeeRequestsPanel";
 import ManageHelpAssistance from "../components/panels/ManageHelpAssistance";
+import { API_BASE_URL } from "../config";
 
 const SuperadminDashboard = () => {
   const [alerts, setAlerts] = useState([]);
@@ -33,7 +34,7 @@ const SuperadminDashboard = () => {
   const indiaCenter = [22.9734, 78.6569];
 
   useEffect(() => {
-    fetch("/api/report/all-alerts")
+    fetch(`${API_BASE_URL}/api/report/all-alerts`)
       .then((res) => res.json())
       .then((data) => {
         setAlerts(data);

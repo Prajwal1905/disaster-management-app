@@ -3,8 +3,10 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
+import { API_BASE_URL } from "../config";
 
-const SOCKET_SERVER_URL = "http://localhost:5000";
+const SOCKET_SERVER_URL = API_BASE_URL;
+
 
 const VolunteerChat = () => {
   const { id: groupId } = useParams();
@@ -35,7 +37,8 @@ const VolunteerChat = () => {
   useEffect(() => {
     const fetchGroup = async () => {
       try {
-        const res = await axios.get(`/api/volunteer-groups/${groupId}`);
+        const res = await axios.get(`${API_BASE_URL}/api/volunteer-groups/${groupId}`);
+
         setGroup(res.data);
       } catch {
         toast.error("Failed to load group");

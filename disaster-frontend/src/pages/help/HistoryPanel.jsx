@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../../config";
+
 
 const HistoryPanel = () => {
   const [history, setHistory] = useState([]);
@@ -13,7 +15,7 @@ const HistoryPanel = () => {
       try {
         const token = localStorage.getItem("helpToken");
 
-        const res = await axios.get("/api/help/history", {
+        const res = await axios.get(`${API_BASE_URL}/api/help/history`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

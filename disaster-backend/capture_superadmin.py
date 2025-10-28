@@ -1,6 +1,7 @@
 import cv2
+import os
 
-# Open webcam
+os.makedirs("temp_faces", exist_ok=True)
 cap = cv2.VideoCapture(0)
 cv2.namedWindow("Capture Superadmin Face")
 
@@ -16,13 +17,13 @@ while True:
     cv2.imshow("Capture Superadmin Face", frame)
     k = cv2.waitKey(1)
 
-    if k % 256 == 27:  # ESC pressed
-        print("❌ Closing without capturing")
+    if k % 256 == 27:
+        print("❌ Cancelled")
         break
-    elif k % 256 == 32:  # SPACE pressed
-        img_name = "superadmin_face.jpg"
-        cv2.imwrite(img_name, frame)
-        print(f"✅ Saved image as {img_name}")
+    elif k % 256 == 32:
+        img_path = os.path.join("temp_faces", "superadmin_face.jpg")
+        cv2.imwrite(img_path, frame)
+        print(f"✅ Temporarily saved: {img_path}")
         break
 
 cap.release()

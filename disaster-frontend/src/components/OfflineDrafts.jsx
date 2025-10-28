@@ -16,6 +16,8 @@ import {
   FaExclamationCircle,
   FaSpinner,
 } from "react-icons/fa";
+import { API_BASE_URL } from "../config";
+
 
 const STORE_NAME = "reports";
 
@@ -66,7 +68,7 @@ const OfflineDrafts = () => {
         formData.append("file", report.file);
       }
 
-      await fetch("/api/hazard-report", {
+      await fetch(`${API_BASE_URL}/api/hazard-report`, {
         method: "POST",
         body: formData,
       });

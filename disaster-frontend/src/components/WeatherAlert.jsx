@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { AlertTriangle, RefreshCw } from "lucide-react";
+import { API_BASE_URL } from "../config";
 
 const RISK_STYLES = {
   Critical: "bg-red-600 text-white animate-pulse-glow",
@@ -25,7 +26,7 @@ const WeatherAlert = () => {
 
     try {
       setLoading(true);
-      const res = await axios.get(`http://localhost:5000/api/weather?lat=${lat}&lon=${lon}`);
+      const res = await axios.get(`${API_BASE_URL}/api/weather?lat=${lat}&lon=${lon}`);
 
       if (res.data.weather) {
         const fixedWeather = {
@@ -36,7 +37,7 @@ const WeatherAlert = () => {
       }
       setAlert(res.data.alert || null);
 
-      const riskRes = await axios.get(`http://localhost:5000/api/weather/predict_risk?lat=${lat}&lon=${lon}`);
+      const riskRes = await axios.get(`${API_BASE_URL}/api/weather/predict_risk?lat=${lat}&lon=${lon}`);
       setRisk(riskRes.data || null);
     } catch (error) {
       console.error("Error fetching weather/risk:", error);

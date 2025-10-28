@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../../config";
+
 
 const HelpProfile = () => {
   const [profile, setProfile] = useState(null);
@@ -22,7 +24,8 @@ const HelpProfile = () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await axios.get(`/api/help_assist/profile?email=${email}`);
+      const res = await axios.get(`${API_BASE_URL}/api/help_assist/profile?email=${email}`);
+
       setProfile(res.data);
     } catch (err) {
       console.error("❌ Failed to fetch profile:", err);
@@ -35,7 +38,7 @@ const HelpProfile = () => {
   const handleLogout = () => {
     localStorage.removeItem("helpUser");
     localStorage.removeItem("helpToken");
-    window.location.href = "http://localhost:3000/";
+    window.location.href = "/";
   };
 
   if (loading) {

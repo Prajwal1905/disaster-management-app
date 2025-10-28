@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { API_BASE_URL } from "../config";
+
 
 const SuperadminLogin = () => {
   const [username, setUsername] = useState('');
@@ -12,7 +14,7 @@ const SuperadminLogin = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:5000/api/superadmin/login", {
+      const response = await axios.post(`${API_BASE_URL}/api/superadmin/login`, {
         username,
         password,
       });

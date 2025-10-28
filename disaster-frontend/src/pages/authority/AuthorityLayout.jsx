@@ -6,6 +6,8 @@ import LiveAlertMap from "./LiveAlertmap";
 import AuthorityProfile from "./Profile";
 import ResolvedAlerts from "./AllAlerts";
 import SendAlertPage from "./SendAlert";
+import { API_BASE_URL } from "../../config";
+
 
 const AuthorityLayout = () => {
   const [activeTab, setActiveTab] = useState("map");

@@ -4,6 +4,8 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { API_BASE_URL } from "../../config";
+
 
 // Default center (India)
 const defaultCenter = [20.5937, 78.9629];
@@ -104,7 +106,7 @@ const RegisterAuthority = () => {
     };
 
     try {
-      await axios.post("/api/register-authority", payload);
+      await axios.post(`${API_BASE_URL}/api/register-authority`, payload);
       toast.success("Authority registered successfully");
 
       setFormData({

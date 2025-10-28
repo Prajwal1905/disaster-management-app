@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../../config";
+
 
 const ITEMS_PER_PAGE = 6;
 
@@ -15,8 +17,8 @@ const UsersAndAuthorities = () => {
     const fetchData = async () => {
       try {
         const [usersRes, authoritiesRes] = await Promise.all([
-          axios.get("/api/community/users"),
-          axios.get("/api/superadmin/authorities"),
+          axios.get(`${API_BASE_URL}/api/community/users`),
+          axios.get(`${API_BASE_URL}/api/superadmin/authorities`),
         ]);
         setUsers(usersRes.data);
         setAuthorities(authoritiesRes.data);

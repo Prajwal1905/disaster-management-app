@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
 import { toast } from "react-toastify";
+import { API_BASE_URL } from "../../config";
+
 
 const RefugeeRequestsPanel = () => {
   const [requests, setRequests] = useState([]);
@@ -13,7 +15,7 @@ const RefugeeRequestsPanel = () => {
 
   const fetchRequests = async () => {
     try {
-      const res = await axios.get("/api/help_assist/refugee_requests");
+      const res = await axios.get(`${API_BASE_URL}/api/help_assist/refugee_requests`);
       setRequests(res.data);
     } catch (err) {
       console.error("Error fetching refugee requests:", err);
@@ -32,7 +34,7 @@ const RefugeeRequestsPanel = () => {
         return;
       }
 
-      await axios.post("/api/help_assist/nearby", {
+      await axios.post(`${API_BASE_URL}/api/help_assist/nearby`, {
         latitude,
         longitude,
         request_id: req.id,

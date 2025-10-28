@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { API_BASE_URL } from "../config";
+
 
 // Language dictionary
 const LANG = {
@@ -152,7 +154,7 @@ const Chatbot = () => {
 
     try {
       const userLoc = await getUserLocation();
-      const res = await fetch("http://localhost:5000/api/chatbot", {
+      const res = await fetch(`${API_BASE_URL}/api/chatbot`, { 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -223,7 +225,8 @@ const Chatbot = () => {
         timestamp: new Date().toISOString(),
       };
 
-      const req = fetch("/api/sos", {
+      const req = fetch(`${API_BASE_URL}/api/sos`, {
+
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(sosPayload),

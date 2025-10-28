@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Webcam from "react-webcam";
+import { API_BASE_URL } from "../config";
+
 
 const videoConstraints = {
   width: 300,
@@ -31,7 +33,7 @@ const AuthorityLogin = () => {
     }
 
     try {
-      const res = await axios.post("/api/authority-login", {
+      const res = await axios.post(`${API_BASE_URL}/api/authority-login`, {
         email,
         password,
         faceImage: faceImage || null,

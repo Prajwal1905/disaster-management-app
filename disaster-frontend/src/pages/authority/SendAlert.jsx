@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../../config";
+
+import toast from "react-hot-toast";
+
 
 const SendAlert = () => {
   const [type, setType] = useState("");
@@ -10,17 +14,19 @@ const SendAlert = () => {
     const authorityUser = JSON.parse(localStorage.getItem("authorityUser"));
 
     try {
-      await axios.post("http://localhost:5000/api/alerts/report", {
+      await axios.post(`${API_BASE_URL}/api/alerts/report`, {
+
         type,
         description,
         authorityId: authorityUser?._id,
       });
-      alert("Alert sent!");
+      toast.success("✅ Alert sent!");
       setType("");
       setDescription("");
     } catch (error) {
       console.error("Error sending alert", error);
-      alert("Failed to send alert");
+      toast.error("❌ Failed to send alert");
+
     }
   };
 

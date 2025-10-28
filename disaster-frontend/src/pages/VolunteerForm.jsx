@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { API_BASE_URL } from "../config";
+
 
 const VolunteerForm = () => {
   const [formData, setFormData] = useState({
@@ -24,7 +26,7 @@ const VolunteerForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/api/volunteer-join", formData);
+      await axios.post(`${API_BASE_URL}/api/volunteer-join`, formData);
       toast.success("Thanks for registering as a volunteer!");
       setFormData({
         name: "",

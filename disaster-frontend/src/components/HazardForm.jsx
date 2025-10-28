@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from "../config";
+
 
 function HazardForm() {
   const [description, setDescription] = useState('');
@@ -8,7 +10,7 @@ function HazardForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/report', {
+      await axios.post(`${API_BASE_URL}/report`, {
         description,
         location,
         timestamp: new Date().toISOString()

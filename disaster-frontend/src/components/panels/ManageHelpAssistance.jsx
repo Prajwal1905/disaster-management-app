@@ -4,6 +4,8 @@ import toast from "react-hot-toast";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { API_BASE_URL } from "../../config";
+
 
 const ITEMS_PER_PAGE = 10;
 

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { API_BASE_URL } from "../../config";
+
 
 const SendPublicAlert = () => {
   const [title, setTitle] = useState('');
@@ -16,7 +18,7 @@ const SendPublicAlert = () => {
     }
 
     try {
-      const res = await axios.post('/api/superadmin/send-alert', {
+      const res = await axios.post(`${API_BASE_URL}/api/superadmin/send-alert`, {
         title,
         message,
         type,

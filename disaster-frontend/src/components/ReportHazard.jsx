@@ -6,6 +6,7 @@ import "leaflet/dist/leaflet.css";
 import { saveReportOffline, syncReports } from "../utils/indexedDB";
 import axios from "axios";
 import { FaMapMarkerAlt, FaFileImage, FaFileVideo, FaInfoCircle } from "react-icons/fa";
+import { API_BASE_URL } from "../config";
 
 const severityColors = {
   High: "text-red-700 font-bold",
@@ -97,7 +98,8 @@ const ReportHazard = () => {
         if (form[key]) formData.append(key, form[key]);
       });
 
-      await axios.post("/api/report/hazard-report", formData);
+      await axios.post(`${API_BASE_URL}/api/report/hazard-report`, formData);
+
       toast.success("✅ Hazard reported successfully!");
 
       // Reset form

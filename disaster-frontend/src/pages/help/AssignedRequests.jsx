@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { API_BASE_URL } from "../../config";
 
 const AssignedRequests = () => {
   const [requests, setRequests] = useState([]);
@@ -27,7 +28,8 @@ const AssignedRequests = () => {
     const fetchAssignedRequests = async () => {
       try {
         const token = localStorage.getItem("helpToken");
-        const res = await axios.get("/api/help_assist/assigned_requests", {
+        const res = await axios.get(`${API_BASE_URL}/api/help_assist/assigned_requests`, {
+
           headers: {
             Authorization: `Bearer ${token}`,
           },

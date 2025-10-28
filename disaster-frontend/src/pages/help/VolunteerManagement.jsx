@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../../config";
 
 const VolunteerManagement = () => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const VolunteerManagement = () => {
   // ✅ Moved fetchGroups out of useEffect so it's reusable
   const fetchGroups = async () => {
     try {
-      const res = await axios.get("/api/volunteer-groups");
+      const res = await axios.get(`${API_BASE_URL}/api/volunteer-groups`);
       setGroups(res.data || []);
       toast.success(`✅ Loaded ${res.data.length} active groups`);
     } catch (err) {
@@ -91,7 +92,7 @@ const VolunteerManagement = () => {
     if (media) formData.append("media", media);
 
     try {
-      const res = await axios.post("/api/group", formData);
+      const res = await axios.post(`${API_BASE_URL}/api/group`, formData);
       const { inviteLink, name, _id } = res.data;
 
       toast.success(

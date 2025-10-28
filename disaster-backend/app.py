@@ -22,6 +22,7 @@ from routes.help_routes import help_assist_bp
 from routes.chatbot_routes import chatbot_bp
 from routes.weather_bp import weather_bp, check_weather_for_all_users
 from routes.sos import sos_bp
+from routes.superadmin_face_routes import superadmin_face_bp
 
 from config import Config
 
@@ -75,7 +76,8 @@ blueprints = [
     (help_assist_bp, None),
     (chatbot_bp, "/api"),
     (weather_bp, None),
-    (sos_bp, None)
+    (sos_bp, None),
+    (superadmin_face_bp, "/api/superadmin"),
     
 ]
 

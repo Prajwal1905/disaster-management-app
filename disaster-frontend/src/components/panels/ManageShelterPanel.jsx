@@ -4,6 +4,8 @@ import toast from "react-hot-toast";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import { API_BASE_URL } from "../../config";
+
 
 // Custom icons
 const shelterIcon = new L.Icon({
@@ -23,7 +25,7 @@ const ManageShelterPanel = () => {
 
   const fetchShelters = async () => {
     try {
-      const res = await axios.get("/api/shelters");
+      const res = await axios.get(`${API_BASE_URL}/api/shelters`);
       const approvedShelters = res.data.filter((s) => s.status === "approved");
       setShelters(approvedShelters);
     } catch {
@@ -33,7 +35,7 @@ const ManageShelterPanel = () => {
 
   const fetchPendingShelterRequests = async () => {
     try {
-      const res = await axios.get("/api/shelters/pending");
+      const res = await axios.get(`${API_BASE_URL}/api/shelters/pending`);
       setPendingRequests(res.data);
     } catch {
       toast.error("Failed to load pending requests");
@@ -56,7 +58,7 @@ const ManageShelterPanel = () => {
 
     try {
       await axios.patch(
-        `/api/shelters/${req._id}/status`,
+        `${API_BASE_URL}/api/shelters/${req._id}/status`,
         { status: approve ? "approved" : "rejected" },
         {
           headers: {

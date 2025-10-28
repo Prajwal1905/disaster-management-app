@@ -6,6 +6,10 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { ROLE_TO_TYPES } from "../../utils/hazardMapping";
 import { io } from "socket.io-client";
+import { API_BASE_URL } from "../../config";
+
+import { Geolocation } from "@capacitor/geolocation";
+
 
 // Icons
 const authorityIcon = new Icon({
@@ -46,6 +50,27 @@ const LiveAlertMap = () => {
   const alarmAudio = useRef();
   const alarmTimeoutRef = useRef(null);
   const mapRef = useRef();
+
+  useEffect(() => {
+  const getCurrentLoc = async () => {
+    if (!storedAuthority?.location) {
+      const perm = await Geolocation.requestPermissions();
+      if (perm.location !== "denied") {
+        const pos = await Geolocation.getCurrentPosition();
+        setAuthorityLocation({
+          lat: pos.coords.latitude,
+          lon: pos.coords.longitude,
+        });
+      }
+    } else {
+      const { lat, lng } = storedAuthority.location;
+      setAuthorityLocation({ lat, lon: lng });
+    }
+  };
+
+  getCurrentLoc();
+}, []);
+
 
   useEffect(() => {
     const allowAudio = () => {
@@ -108,7 +133,10 @@ const LiveAlertMap = () => {
     const allowedTypes = ROLE_TO_TYPES[role] || [];
 
     axios
-      .get(`/api/alerts?role=${role}&lat=${lat}&lon=${lng}`)
+      .get(`${API_BASE_URL}/api/alerts`, {
+        params: { role, lat, lon: lng },
+      })
+
       .then((res) => {
         const fetched = Array.isArray(res.data) ? res.data : [];
         const filtered = fetched.filter((alert) => {
@@ -146,7 +174,8 @@ const LiveAlertMap = () => {
   }, []);
 
   useEffect(() => {
-    socket.current = io("http://localhost:5000");
+    socket.current = io(API_BASE_URL);
+
 
     socket.current.on("connect", () => console.log("🟢 Socket connected"));
 
@@ -238,7 +267,8 @@ const LiveAlertMap = () => {
   const handleSendHelp = async (alertId) => {
     try {
       setSendingHelpIds((prev) => [...prev, alertId]);
-      await axios.patch(`/api/alerts/help/${alertId}`);
+      await axios.patch(`${API_BASE_URL}/api/alerts/help/${alertId}`);
+
       setHelpSentIds((prev) => [...prev, alertId]);
       toast.success("✅ Help sent");
 
@@ -258,7 +288,8 @@ const LiveAlertMap = () => {
 
   const handleResolveAlert = async (alertId) => {
     try {
-      await axios.patch(`/api/alerts/${alertId}/resolve`);
+      await axios.patch(`${API_BASE_URL}/api/alerts/${alertId}/resolve`);
+
       setAlerts((prev) => prev.filter((a) => a._id !== alertId));
       toast.success("✅ Alert resolved");
 

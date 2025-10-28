@@ -26,3 +26,9 @@ Thumbs.db
 *.zip
 *.tar.gz
 *.tgz
+
+superadmin_faces/
+temp_faces/
+*.jpg
+*.png
+utils/face_encryption.key

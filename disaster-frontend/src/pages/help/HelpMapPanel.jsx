@@ -3,6 +3,7 @@ import axios from "axios";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { API_BASE_URL } from "../../config";
 
 const redPinIcon = new L.Icon({
   iconUrl: "/red-pin.png",
@@ -28,7 +29,7 @@ const HelpMapPanel = () => {
   const [requests, setRequests] = useState([]);
   const [helps, setHelps] = useState([]);
   const [filter, setFilter] = useState("assigned_pending");
-  
+
   const [processingTasks, setProcessingTasks] = useState({});
   const user = JSON.parse(localStorage.getItem("helpUser"));
   const userEmail = user?.email?.toLowerCase();
@@ -62,8 +63,9 @@ const HelpMapPanel = () => {
 
       // fetch both pending and in_progress together
       const res = await axios.get(
-        `/api/help_assist/my_assigned_pending?email=${user.email}&status=both`
+        `${API_BASE_URL}/api/help_assist/my_assigned_pending?email=${user.email}&status=both`
       );
+
       setRequests(res.data);
     } catch (err) {
       console.error("Error fetching assigned refugee requests:", err);
@@ -72,7 +74,8 @@ const HelpMapPanel = () => {
 
   const fetchHelps = async () => {
     try {
-      const res = await axios.get("/api/help_assist");
+      const res = await axios.get(`${API_BASE_URL}/api/help_assist`);
+
       setHelps(res.data);
     } catch (err) {
       console.error("Error fetching help assistance locations:", err);
@@ -81,9 +84,13 @@ const HelpMapPanel = () => {
 
   const completeTask = async (reqId) => {
     try {
-      await axios.post(`/api/help_assist/complete-task/${reqId}`, {
-        email: user.email,
-      });
+      await axios.post(
+        `${API_BASE_URL}/api/help_assist/complete-task/${reqId}`,
+        {
+          email: user.email,
+        }
+      );
+
       // Remove from list, but assumed saved in backend/history
       setRequests((prev) => prev.filter((r) => r._id !== reqId));
       setProcessingTasks((prev) => {
@@ -161,9 +168,8 @@ const HelpMapPanel = () => {
           const handleTask = async (reqId) => {
             setProcessingTasks((prev) => ({ ...prev, [reqId]: true }));
             try {
-              await axios.post(`/api/help_assist/handle-task/${reqId}`, {
-                email: user.email,
-              });
+              await axios.post(`${API_BASE_URL}/api/help_assist/handle-task/${reqId}`, { email: user.email });
+
               await fetchRequests(); // ⬅️ Ensure data refreshes with new 'handled_by'
             } catch (err) {
               console.error(

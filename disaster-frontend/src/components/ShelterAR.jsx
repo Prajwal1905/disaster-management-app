@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { API_BASE_URL } from "../config";
+
 
 const ShelterAR = () => {
   const [shelters, setShelters] = useState([]);
@@ -6,7 +8,8 @@ const ShelterAR = () => {
   useEffect(() => {
     async function fetchShelters() {
       try {
-        const res = await fetch("/api/shelters");
+        const res = await fetch(`${API_BASE_URL}/api/shelters`);
+
         const data = await res.json();
         setShelters(data);
       } catch (err) {

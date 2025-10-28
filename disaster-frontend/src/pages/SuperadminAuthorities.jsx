@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { API_BASE_URL } from "../config";
+
 
 const SuperadminAuthorities = () => {
   const [authorities, setAuthorities] = useState([]);
@@ -9,7 +11,7 @@ const SuperadminAuthorities = () => {
 
   const fetchAuthorities = async () => {
     try {
-      const res = await axios.get("/api/superadmin/authorities");
+      const res = await axios.get(`${API_BASE_URL}/api/superadmin/authorities`);
       setAuthorities(res.data);
     } catch (err) {
       toast.error("Failed to load authorities.");
@@ -27,10 +29,10 @@ const SuperadminAuthorities = () => {
   const handleSubmit = async () => {
     try {
       if (editingId) {
-        await axios.put(`/api/superadmin/authorities/${editingId}`, form);
+        await axios.put(`${API_BASE_URL}/api/superadmin/authorities/${editingId}`, form);
         toast.success("Authority updated.");
       } else {
-        await axios.post("/api/superadmin/authorities", form);
+        await axios.post(`${API_BASE_URL}/api/superadmin/authorities`, form);
         toast.success("Authority added.");
       }
       setForm({ name: "", email: "", password: "" });
@@ -44,7 +46,7 @@ const SuperadminAuthorities = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this authority?")) return;
     try {
-      await axios.delete(`/api/superadmin/authorities/${id}`);
+      await axios.delete(`${API_BASE_URL}/api/superadmin/authorities/${id}`);
       toast.success("Authority deleted.");
       fetchAuthorities();
     } catch (err) {

@@ -4,6 +4,8 @@ import axios from "axios";
 import L from "leaflet";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { API_BASE_URL } from "../../config";
+
 
 const sosIcon = L.divIcon({
   className: "sos-marker",
@@ -40,7 +42,7 @@ const SuperAdminMapView = () => {
 
   const fetchAlerts = async () => {
     try {
-      const res = await axios.get("/api/report/all-alerts");
+      const res = await axios.get(`${API_BASE_URL}/api/report/all-alerts`);
       const activeAlerts = res.data.filter(
         (alert) => alert.status !== "resolved" && alert.status !== "fake"
       );
@@ -73,9 +75,8 @@ const SuperAdminMapView = () => {
           if (!lat || !lon) return alert;
 
           try {
-            const riskRes = await axios.get(
-              `/api/weather/predict_risk?lat=${lat}&lon=${lon}`
-            );
+            const riskRes = await axios.get(`${API_BASE_URL}/api/weather/predict_risk?lat=${lat}&lon=${lon}`);
+
             const riskData = {
               risk_level: riskRes.data.risk_level,
               risk_prob: riskRes.data.risk_probability,

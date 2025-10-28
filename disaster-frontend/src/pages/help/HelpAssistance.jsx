@@ -5,6 +5,7 @@ import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../../config";
 
 const HelpAssistance = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -76,7 +77,10 @@ const HelpAssistance = () => {
 
     const fetchNearbyAssistants = async () => {
       try {
-        const res = await axios.get("/api/help_assist?status=approved");
+        const res = await axios.get(
+          `${API_BASE_URL}/api/help_assist?status=approved`
+        );
+
         console.log("Assistants fetched:", res.data);
         console.log("User location:", formData.location);
 
@@ -143,7 +147,11 @@ const HelpAssistance = () => {
           username: formData.email,
           password: formData.password,
         };
-        const res = await axios.post("/api/help_assist/login", payload);
+        const res = await axios.post(
+          `${API_BASE_URL}/api/help_assist/login`,
+          payload
+        );
+
         toast.success(res.data.message || "Logged in!");
         const user = {
           name: res.data.name || formData.name || "Help Assistant",
@@ -167,7 +175,7 @@ const HelpAssistance = () => {
         if (formData.image) registerForm.append("image", formData.image);
 
         const res = await axios.post(
-          "/api/help_assist/register",
+          `${API_BASE_URL}/api/help_assist/register`,
           registerForm,
           {
             headers: { "Content-Type": "multipart/form-data" },

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { API_BASE_URL } from "../config";
+
 
 const CommunitySignup = () => {
   const [form, setForm] = useState({
@@ -58,7 +60,7 @@ const CommunitySignup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/api/community/signup", form);
+      await axios.post(`${API_BASE_URL}/api/community/signup`, form);
       toast.success("Signup successful!");
       setTimeout(() => (window.location.href = "/"), 2000);
     } catch (err) {

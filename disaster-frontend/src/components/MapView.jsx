@@ -3,6 +3,8 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import axios from "axios";
+import { API_BASE_URL } from "../config";
+
 
 const alertIcon = new L.Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/535/535234.png",
@@ -21,7 +23,7 @@ const MapView = () => {
   useEffect(() => {
     const fetchAlerts = async () => {
       try {
-        const res = await axios.get("/api/alerts");
+        const res = await axios.get(`${API_BASE_URL}/api/alerts`);
         setAlerts(res.data);
       } catch (err) {
         console.error("Error fetching alerts:", err);
@@ -30,7 +32,8 @@ const MapView = () => {
 
     const fetchShelters = async () => {
       try {
-        const res = await axios.get("/api/shelters");
+        const res = await axios.get(`${API_BASE_URL}/api/shelters`);
+
         setShelters(res.data);
       } catch (err) {
         console.error("Error fetching shelters:", err);

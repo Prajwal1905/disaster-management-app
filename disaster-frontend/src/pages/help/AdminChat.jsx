@@ -6,7 +6,9 @@ import { io } from "socket.io-client";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
-const SOCKET_SERVER_URL = "http://localhost:5000";
+import { API_BASE_URL } from "../../config";
+const SOCKET_SERVER_URL = API_BASE_URL;
+
 
 // Location Picker Modal
 const LocationPickerMap = ({ onSelect, onCancel }) => {
@@ -83,7 +85,8 @@ const AdminChat = () => {
   useEffect(() => {
     const fetchGroup = async () => {
       try {
-        const res = await axios.get(`/api/volunteer-groups/${groupId}`);
+        const res = await axios.get(`${API_BASE_URL}/api/volunteer-groups/${groupId}`);
+
         setGroup(res.data);
       } catch {
         toast.error("Failed to load group");

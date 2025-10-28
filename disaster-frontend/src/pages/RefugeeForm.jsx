@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { API_BASE_URL } from "../config";
 
 const RefugeeForm = () => {
   const [formData, setFormData] = useState({
@@ -53,7 +54,7 @@ const RefugeeForm = () => {
       });
       if (media) payload.append("media", media);
 
-      await axios.post("/api/refugee-help", payload);
+      await axios.post(`${API_BASE_URL}/api/refugee-help`, payload);
       toast.success("Request submitted!");
       setFormData({
         name: "",
